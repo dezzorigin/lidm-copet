@@ -70,13 +70,15 @@ test.describe('dashboard + vocab', () => {
     await expect(page.getByRole('heading', { name: /Vocab Database/ })).toBeVisible();
     await expect(page.getByRole('heading', { name: 'Phishing', exact: true })).toBeVisible();
     await page.getByRole('tab', { name: 'SECURITY CONCEPT' }).click();
-    await expect(page.getByText('Credentials')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Credentials', exact: true })).toBeVisible();
     await page.getByRole('tab', { name: 'SEMUA' }).click();
     await page.getByRole('button', { name: /Kartu Phishing/ }).click();
     await expect(page.getByText(/Scam drill \(English context\)/)).toBeVisible();
     await page.getByRole('button', { name: /Tandai dikuasai/ }).click();
     await expect(page.getByRole('button', { name: /Sudah dikuasai/ })).toBeVisible();
-    await expect(page.getByText(/1\/15 dikuasai/)).toBeVisible();
+    // Penghitung "n/15 dikuasai" disembunyikan di bawah breakpoint sm
+    // (hidden sm:inline) — asersi isi teks, bukan visibilitas.
+    await expect(page.getByText(/1\/15 dikuasai/)).toHaveText(/1\/15 dikuasai/);
   });
 });
 
