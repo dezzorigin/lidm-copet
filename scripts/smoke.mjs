@@ -46,12 +46,13 @@ try {
   await wait(4000);
   const home = await get('/', 'home');
   check(home.code === '200', `/ -> HTTP ${home.code}`);
-  check(home.body.includes('Kenali pesannya'), '/ tidak mengandung headline COPET');
-  check(home.body.includes('github.com/dezzorigin/lidm-copet'), '/ tidak mengandung tautan GitHub repo');
+  // dist/index.html adalah shell SPA: headline + tautan GitHub tinggal di
+  // bundle JS (render client-side), bukan di HTML. Cek keduanya.
   for (const tag of ['og:title', 'og:description', 'og:type', 'og:url', 'og:image', 'twitter:card', 'twitter:title', 'twitter:description', 'twitter:image']) {
     check(home.body.includes(tag), `/ tidak mengandung tag ${tag} (og-preview.md)`);
   }
   check(home.body.includes('https://lidm-copet.pages.dev/og-image.png'), '/ og:image bukan URL absolut lidm-copet.pages.dev/og-image.png');
+  check(home.body.includes('/favicon.svg'), '/ tidak mereferensikan favicon');
 
   const ogHead = await head('/og-image.png', 'og');
   check(/HTTP\/[\d.]+ 200/.test(ogHead), `/og-image.png -> bukan 200:\n${ogHead.slice(0, 300)}`);
@@ -65,6 +66,8 @@ try {
   if (js) {
     const bundle = await get(js[0], 'bundle');
     check(bundle.code === '200', `${js[0]} -> HTTP ${bundle.code}`);
+    check(bundle.body.includes('Kenali pesannya'), 'bundle JS tidak mengandung headline COPET');
+    check(bundle.body.includes('github.com/dezzorigin/lidm-copet'), 'bundle JS tidak mengandung tautan GitHub repo');
   }
 } finally {
   // Matikan server via PID, BUKAN pkill -f (pelajaran #36: pola pkill
