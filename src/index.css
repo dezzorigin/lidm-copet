@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+/* Tailwind v4: token desain COPET (lihat docs/DESIGN.md).
+   tailwind.config.js gaya v3 DIHAPUS — v4 mengabaikannya, termasuk
+   darkMode: 'class' (dulu toggle tema gelap tidak berpengaruh ke
+   utility dark: sama sekali). Varian gelap didefinisikan di sini. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-kertas: #f5f0e6;
+  --color-kertas-2: #efe8d8;
+  --color-tinta: #1b1a17;
+  --color-laci: #1e5b40;
+  --color-laci-tua: #143d2b;
+  --color-cap: #b3261e;
+  --color-cap-tua: #7f1a14;
+  --color-bukti: #d97706;
+  --color-daktil: #6e6a61;
+  --color-arsip: #16130f;
+  --color-arsip-2: #221e19;
+  --color-kertas-gelap: #efe9dc;
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-kertas);
+  color: var(--color-tinta);
+  font-family: var(--font-mono);
+}
+
+.dark body {
+  background-color: var(--color-arsip);
+  color: var(--color-kertas-gelap);
+}
+
+/* Garis ganda koran: pemisah section (detail khas, lihat DESIGN.md). */
+.rule-double {
+  border-top: 3px solid currentColor;
+  position: relative;
+}
+.rule-double::after {
+  content: "";
+  display: block;
+  border-top: 1px solid currentColor;
+  margin-top: 2px;
+}
+
+/* Stempel perkara: cap miring border ganda (detail khas). */
+.stamp {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-cap);
+  border: 3px double var(--color-cap);
+  border-radius: 4px;
+  padding: 0.35rem 0.7rem;
+  transform: rotate(-6deg);
+  background: color-mix(in srgb, var(--color-cap) 6%, transparent);
+}
+
+.dark .stamp {
+  color: #e0655c;
+  border-color: #e0655c;
+  background: color-mix(in srgb, #e0655c 8%, transparent);
+}
+
+/* Hormati prefers-reduced-motion (gate a11y). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Cetak sertifikat: hanya lembar piagam yang tercetak. */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #certificate-sheet,
+  #certificate-sheet * {
+    visibility: visible;
+  }
+  #certificate-sheet {
+    position: absolute;
+    inset: 0;
+  }
+}
