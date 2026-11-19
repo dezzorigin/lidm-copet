@@ -1,0 +1,47 @@
+{
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.3.0",
+    "framer-motion": "^12.40.0",
+    "lucide-react": "^1.17.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "description": "COPET (Counter Penipuan Terintegrasi) — platform micro-teaching gamified LEXiCO untuk literasi anti-penipuan berbahasa Inggris (LIDM 2026).",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.55.0",
+    "@types/node": "^24.12.3",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.3.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.6.0",
+    "postcss": "^8.5.15",
+    "puppeteer-core": "^24.0.0",
+    "tailwindcss": "^4.3.0",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.59.2",
+    "vite": "^8.0.12"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "name": "lidm-copet",
+  "private": true,
+  "scripts": {
+    "build": "tsc -b && vite build",
+    "dev": "vite",
+    "e2e": "playwright test",
+    "lint": "eslint .",
+    "make-video": "node scripts/make-video.mjs",
+    "preview": "vite preview --port 4173 --strictPort --host 127.0.0.1",
+    "screenshots": "node scripts/screenshot.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "typecheck": "tsc -b --noEmit",
+    "validate": "node scripts/check-static.mjs"
+  },
+  "type": "module",
+  "version": "1.0.0"
+}
